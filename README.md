@@ -1,5 +1,5 @@
 <h1 align="center">Datasets2Darknet</h1>
-<h4 align="center">Tool for extracting images and labels from datasets and parsing them to Darknet format. </h4>
+<h4 align="center">Modular tool that extracts images and labels from multiple datasets and parses them to Darknet format. </h4>
 
 <p align="center">
   <a href="https://github.com/angeligareta/Datasets2Darknet/blob/master/LICENSE">
