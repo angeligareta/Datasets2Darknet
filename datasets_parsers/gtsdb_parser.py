@@ -2,11 +2,11 @@
 
 # Python program for converting the ppm files from The German Traffic Sign Recognition Benchmark (GTSRB) to jpg files
 # in order to use them in YOLO. Besides, it generate a txt with all the paths to the converted images in darknet format.
-# By Ángel Igareta for SaferAuto [https://github.com/angeligareta/SaferAuto]
+# By Angel Igareta for SaferAuto [https://github.com/angeligareta/SaferAuto]
 import csv
 from common_config import *
 
-GTSDB_ROOT_PATH = "/media/angeliton/Backup/DBs/Road Signs/GTSDB/"
+GTSDB_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/GTSDB/"
 
 ANNOTATIONS_FILE_PATH = GTSDB_ROOT_PATH + "gt.txt"
 

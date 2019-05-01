@@ -6,7 +6,7 @@
 import csv
 from common_config import *
 
-BTSDB_ROOT_PATH = "/media/angeliton/Backup/DBs/Road Signs/BTSDB/"
+BTSDB_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/BTSDB/"
 
 COMBINED_ANNOTATIONS_FILE_PATH = BTSDB_ROOT_PATH + "annotations-combined.txt"
 

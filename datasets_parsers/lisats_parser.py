@@ -6,7 +6,7 @@
 import csv
 from common_config import *
 
-LISATS_ROOT_PATH = "/media/angeliton/Backup/DBs/Road Signs/LISATS/"
+LISATS_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/LISATS/"
 
 COMBINED_ANNOTATIONS_FILE_PATH = LISATS_ROOT_PATH + "allAnnotations.csv"
 

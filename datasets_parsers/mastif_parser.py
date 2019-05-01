@@ -4,7 +4,7 @@ import re
 import os.path
 from common_config import *
 
-MASTIF_ROOT_PATH = "D:/Data/Desktop/MASTIF/"
+MASTIF_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/MASTIF/"
 
 ANNOTATIONS_FOLDERS = ["TS2009", "TS2010", "TS2011"]
 ANNOTATIONS_FILENAME = "index.seq"
