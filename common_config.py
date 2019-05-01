@@ -202,3 +202,34 @@ def add_false_negatives(total_false_negatives_count, total_false_negatives_dir, 
 def add_false_data(total_false_data, total_false_negatives_dir, background_img_path, output_train_dir_path, train_text_file):
     add_bg_data(round(total_false_data / 2), background_img_path, output_train_dir_path, train_text_file)
     add_false_negatives(round(total_false_data / 2), total_false_negatives_dir, output_train_dir_path, train_text_file)
+
+
+# Prints the object's number of each class of the received array.
+def print_class_info(classes_counter):
+    for i in range(0, len(classes_counter)):
+        print('\t-CLASS: ' + str(i) + ' : ' + str(classes_counter[i]))
+    print('TOTAL: ' + str(sum(classes_counter)))
+
+
+# Prints the train classes, test classes and proportion train-test for a DB.
+def print_db_info(classes_counter_train, classes_counter_test):
+    print("[TRAIN FILES]")
+    print_class_info(classes_counter_train)
+
+    print("\n[TEST FILES]")
+    print_class_info(classes_counter_test)
+
+    print("\n[PROPORTION]")
+    for i in range(0, len(classes_counter_test)):
+        total_classes = classes_counter_train[i] + classes_counter_test[i]
+        if total_classes == 0:
+            total_classes = 1
+        print('\t-CLASS: ' + str(i) + ' : ' + "{:.2f}%".format(classes_counter_test[i] / total_classes * 100.0))
+
+
+# Given two arrays, returns the sum of them.
+def add_arrays(array_1, array_2):
+    for i in range(0, len(array_1)):
+        array_2[i] += array_1[i]
+
+    return array_2
