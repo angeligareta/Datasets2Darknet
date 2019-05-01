@@ -9,7 +9,7 @@ import datasets_parsers.mastif_parser as MASTIF
 from common_config import *
 
 # Path where you want to save the dataset 
-ROOT_PATH = "D:/Data/Desktop/datasets/ere/"
+ROOT_PATH = "/home/angeliton/Desktop/SaferAuto/models/datasets/ere/"
 
 # Path of the training and testing txt used as input for darknet.
 OUTPUT_TRAIN_TEXT_PATH = ROOT_PATH + "train.txt"
@@ -20,20 +20,22 @@ OUTPUT_TRAIN_DIR_PATH = ROOT_PATH + "output-img-train/"
 OUTPUT_TEST_DIR_PATH = ROOT_PATH + "output-img-test/"
 
 # Datasets to use
-DATASETS = [GTSDB, BTSDB, LISATS, MASTIF] 
+DATASETS = [GTSDB, BTSDB, LISATS, MASTIF]
+DATASETS_NAMES = ["GTSDB", "BTSDB", "LISATS", "MASTIF"]
 
 # Main method. 
 def main():
     classes_counter_train_total = []
     classes_counter_test_total = []
     
-    for dataset in DATASETS:
+    for dataset_index in range(0, len(DATASETS)):
+        print(DATASETS_NAMES[dataset_index] + ' DATASET: ')
+
         classes_counter_train, classes_counter_test = \
-            dataset.read_dataset(OUTPUT_TRAIN_TEXT_PATH, OUTPUT_TEST_TEXT_PATH, OUTPUT_TRAIN_DIR_PATH, OUTPUT_TEST_DIR_PATH)
+            DATASETS[dataset_index].read_dataset(OUTPUT_TRAIN_TEXT_PATH, OUTPUT_TEST_TEXT_PATH, OUTPUT_TRAIN_DIR_PATH, OUTPUT_TEST_DIR_PATH)
         classes_counter_train_total = add_arrays(classes_counter_train_total, classes_counter_train)
-        classes_counter_test_total = add_arrays(classes_counter_test_total, classes_counter_test)
+        classes_counter_test_total = add_arrays(classes_counter_test_total, classes_counter_test)        
         
-        print(DB_PREFIX[:-1] + ' DATASET: ')
         print_db_info(classes_counter_train, classes_counter_test)
 
     print('TOTAL DATASET: ')

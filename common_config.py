@@ -10,13 +10,13 @@ from PIL import Image
 
 FALSE_NEGATIVE_CLASS = 5  # Class that will contain all the negative samples.
 
-MAX_WIDTH = 512  # Width that the image will be resized to.
-MAX_HEIGHT = 512  # Height that the image will be resized to.
+MAX_WIDTH = 608  # Width that the image will be resized to.
+MAX_HEIGHT = 608  # Height that the image will be resized to.
 
 TRAIN_PROB = 0.7  # REAL 0.85 ADDING FALSE DATA
 TEST_PROB = 0.3  # REAL 0.15
 
-SHOW_IMG = False # Show each image being processed (verbose)
+SHOW_IMG = True # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
 OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed. 
 
@@ -29,7 +29,7 @@ traffic_sign_classes = {}
 
 classes_counter_train = [0, 0, 0, 0, 0, 0]
 classes_counter_test = [0, 0, 0, 0, 0]
-
+classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "STOP", "YIELD"]
 
 # Prefix for each dataset parser. That way you can handle things different 
 # depending on the dataset from here. 
@@ -224,7 +224,7 @@ def print_db_info(classes_counter_train, classes_counter_test):
         total_classes = classes_counter_train[i] + classes_counter_test[i]
         if total_classes == 0:
             total_classes = 1
-        print('\t-CLASS: ' + str(i) + ' : ' + "{:.2f}%".format(classes_counter_test[i] / total_classes * 100.0))
+        print('\t- CLASS ' + str(i) + " - " + classes_names[i] + ' : ' + "{:.2f}%".format(classes_counter_test[i] / total_classes * 100.0))
 
 
 # Given two arrays, returns the sum of them.
