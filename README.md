@@ -43,7 +43,7 @@ The methods the dataset parser must have are:
 def initialize_traffic_sign_classes():
     traffic_sign_classes["4-yield"] = [6]
 ```
--*calculate_darknet_format (input_img, image_width, image_height, row)*: This method converts the specific annotation format for a dataset to the darknet format. First of all we calculate the width and height proportion for the image. After that, we need to retrieve the bounding boxes borders from the specific dataset row and calculate the new positions according to the width and height proportions. Finallu we use the parse_darknet_format common method that needs the left_x, bottom_y, right_x and top_y values. 
+- *calculate_darknet_format (input_img, image_width, image_height, row)*: This method converts the specific annotation format for a dataset to the darknet format. First of all we calculate the width and height proportion for the image. After that, we need to retrieve the bounding boxes borders from the specific dataset row and calculate the new positions according to the width and height proportions. Finallu we use the parse_darknet_format common method that needs the left_x, bottom_y, right_x and top_y values. 
 ```python
 def calculate_darknet_format(input_img, image_width, image_height, row):
     real_img_width, real_img_height = get_img_dim_plt(input_img)
