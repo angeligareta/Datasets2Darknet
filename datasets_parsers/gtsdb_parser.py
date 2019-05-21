@@ -29,7 +29,7 @@ def initialize_traffic_sign_classes():
     traffic_sign_classes["2-mandatory"] = [33, 34, 35, 36, 37, 38, 39, 40]
     traffic_sign_classes["3-stop"] = [14]
     traffic_sign_classes["4-yield"] = [13]
-    traffic_sign_classes["5-false_negatives"] = [6, 12, 32, 41, 42]  # undefined, other, redbluecircles, diamonds
+    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = [6, 12, 32, 41, 42]  # undefined, other, redbluecircles, diamonds
 
 
 # It depends on the row format

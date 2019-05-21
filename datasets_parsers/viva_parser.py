@@ -15,7 +15,7 @@ def initialize_traffic_sign_classes():
     traffic_sign_classes["5-tlred"] = ["stop", "stopLeft"]
     traffic_sign_classes["6-tlamber"] = ["warning", "warningLeft"] 
     traffic_sign_classes["7-tlgreen"] = ["go", "goForward", "goLeft"]
-    traffic_sign_classes["8-false_negatives"] = []
+    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = []
 
 
 # It depends on the row format
