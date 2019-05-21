@@ -14,15 +14,6 @@ COMBINED_ANNOTATIONS_FILE_PATH = LISATS_ROOT_PATH + "allAnnotations.csv"
 INPUT_PATH = LISATS_ROOT_PATH + "input-img/"
 BACKGROUND_IMG_PATH = LISATS_ROOT_PATH + "input-img-bg/"
 
-# Path of the resulting training and testing images of this script and labels.
-
-OUTPUT_TRAIN_DIR_PATH = LISATS_ROOT_PATH + "output-img-train/"
-OUTPUT_TEST_DIR_PATH = LISATS_ROOT_PATH + "output-img-test/"
-
-# Path of the training and testing txt used as input for darknet.
-OUTPUT_TRAIN_TEXT_PATH = LISATS_ROOT_PATH + "train.txt"
-OUTPUT_TEST_TEXT_PATH = LISATS_ROOT_PATH + "test.txt"
-
 DB_PREFIX = 'lisats-'
 
 

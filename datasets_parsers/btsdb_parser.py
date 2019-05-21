@@ -14,15 +14,6 @@ COMBINED_ANNOTATIONS_FILE_PATH = BTSDB_ROOT_PATH + "annotations-combined.txt"
 INPUT_PATH = BTSDB_ROOT_PATH + "input-img/"
 BACKGROUND_IMG_PATH = BTSDB_ROOT_PATH + "input-img-bg/"
 
-# Path of the resulting training and testing images of this script and labels.
-
-OUTPUT_TRAIN_DIR_PATH = BTSDB_ROOT_PATH + "output-img-train/"
-OUTPUT_TEST_DIR_PATH = BTSDB_ROOT_PATH + "output-img-test/"
-
-# Path of the training and testing txt used as input for darknet.
-OUTPUT_TRAIN_TEXT_PATH = BTSDB_ROOT_PATH + "btsdb-train.txt"
-OUTPUT_TEST_TEXT_PATH = BTSDB_ROOT_PATH + "btsdb-test.txt"
-
 DB_PREFIX = 'btsdb-'
 
 

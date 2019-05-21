@@ -12,15 +12,6 @@ ANNOTATIONS_FILENAME = "index.seq"
 # Path to the ppm images of the MASTIF dataset.
 INPUT_PATH = MASTIF_ROOT_PATH + "input-img/"
 
-# Path of the resulting training and testing images of this script and labels.
-
-OUTPUT_TRAIN_DIR_PATH = MASTIF_ROOT_PATH + "output-img-train/"
-OUTPUT_TEST_DIR_PATH = MASTIF_ROOT_PATH + "output-img-test/"
-
-# Path of the training and testing txt used as input for darknet.
-OUTPUT_TRAIN_TEXT_PATH = MASTIF_ROOT_PATH + "mastif-train.txt"
-OUTPUT_TEST_TEXT_PATH = MASTIF_ROOT_PATH + "mastif-test.txt"
-
 DB_PREFIX = 'mastif-'
 
 
