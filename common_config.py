@@ -29,7 +29,7 @@ traffic_sign_classes = {}
 
 classes_counter_train = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 classes_counter_test = [0, 0, 0, 0, 0, 0, 0, 0]
-classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "STOP", "YIELD", "TL-RED", "TL-AMBER", "TL-GREEN"]
+classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "STOP", "YIELD", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
 
 # Prefix for each dataset parser. That way you can handle things different 
 # depending on the dataset from here. 
@@ -217,7 +217,7 @@ def add_false_data(total_false_data, total_false_negatives_dir, background_img_p
 # Prints the object's number of each class of the received array.
 def print_class_info(classes_counter):
     for i in range(0, len(classes_counter)):
-        print('\t-CLASS: ' + str(i) + ' : ' + str(classes_counter[i]))
+        print('\t- CLASS ' + str(i) + " - " + classes_names[i] + ' : ' + str(classes_counter[i]))
     print('TOTAL: ' + str(sum(classes_counter)))
 
 
