@@ -242,4 +242,4 @@ def add_arrays(array_1, array_2):
     for i in range(0, len(array_1)):
         array_2[i] += array_1[i]
 
-    return array_2
+    return array_2.copy()
