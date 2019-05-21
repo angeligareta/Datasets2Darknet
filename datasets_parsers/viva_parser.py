@@ -123,7 +123,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
 
         # Get percentage for train and another for testing
         train_file = rand.choices([True, False], [TRAIN_PROB, TEST_PROB])[0]
-        output_filename = DB_PREFIX + filename
+        output_filename = DB_PREFIX + filename[:-4] # Remove .png
 
         if train_file:
             write_data(output_filename, input_img, input_img_labels, train_text_file, output_train_dir_path, train_file)
