@@ -9,12 +9,13 @@ import matplotlib.patches as patches
 from PIL import Image
 
 FALSE_NEGATIVE_CLASS = 100  # Class that will contain all the negative samples.
+FALSE_NEGATIVE_CLASS_NAME = 'false-negative'
 
 MAX_WIDTH = 608  # Width that the image will be resized to.
 MAX_HEIGHT = 608  # Height that the image will be resized to.
 
-TRAIN_PROB = 0.75
-TEST_PROB = 0.25
+TRAIN_PROB = 0.9
+TEST_PROB = 0.1
 
 SHOW_IMG = False # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
@@ -123,7 +124,7 @@ def get_object_label(obj_class):
             object_class_adjusted = classes[0].split("-")[1]
             return object_class_adjusted
 
-    return "false_negative"
+    return FALSE_NEGATIVE_CLASS_NAME
 
 
 # Returns a string with the darknet label for the received object_class, 

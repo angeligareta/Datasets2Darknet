@@ -7,22 +7,25 @@ import datasets_parsers.gtsdb_parser as GTSDB
 import datasets_parsers.btsdb_parser as BTSDB
 import datasets_parsers.lisats_parser as LISATS
 import datasets_parsers.mastif_parser as MASTIF
+import datasets_parsers.rtsd_parser as RTSD
 from common_config import *
 
 # Path where you want to save the dataset 
-ROOT_PATH = "/home/angeliton/Desktop/SaferAuto/models/datasets/ere/"
+ROOT_PATH = "/home/angeliton/Desktop/SaferAuto/models/datasets/eresl/"
 
 # Path of the training and testing txt used as input for darknet.
-OUTPUT_TRAIN_TEXT_PATH = ROOT_PATH + "train.txt"
-OUTPUT_TEST_TEXT_PATH = ROOT_PATH + "test.txt"
+OUTPUT_TRAIN_TEXT_PATH = ROOT_PATH + "train.list"
+OUTPUT_TEST_TEXT_PATH = ROOT_PATH + "test.list"
 
 # Path of the resulting training and testing images of this script and labels.
 OUTPUT_TRAIN_DIR_PATH = ROOT_PATH + "train/"
 OUTPUT_TEST_DIR_PATH = ROOT_PATH + "test/"
 
 # Datasets to use
-DATASETS = [GTSDB, BTSDB, LISATS, MASTIF, VIVA]
-DATASETS_NAMES = ["GTSDB", "BTSDB", "LISATS", "MASTIF", "VIVA"]
+# DATASETS = [GTSDB, BTSDB, LISATS, MASTIF, VIVA]
+# DATASETS_NAMES = ["GTSDB", "BTSDB", "LISATS", "MASTIF", "VIVA"]
+DATASETS = [RTSD]
+DATASETS_NAMES = ["RTSD"]
 
 # Main method. 
 def main():
