@@ -16,12 +16,14 @@ DB_PREFIX = 'gtsdb-'
 
 
 def initialize_traffic_sign_classes():
-    traffic_sign_classes["0-prohibitory"] = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 15, 16, 17]
+    traffic_sign_classes.clear()
+    traffic_sign_classes["0-prohibitory"] = [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 15, 16]
     traffic_sign_classes["1-danger"] = [11, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     traffic_sign_classes["2-mandatory"] = [33, 34, 35, 36, 37, 38, 39, 40]
     traffic_sign_classes["3-stop"] = [14]
     traffic_sign_classes["4-yield"] = [13]
-    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = [6, 12, 32, 41, 42]  # undefined, other, redbluecircles, diamonds
+    traffic_sign_classes["5-noentry"] = [17]
+    traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = [6, 12, 32, 41, 42]  # undefined, other, redbluecircles, diamonds
 
 
 # It depends on the row format
@@ -47,9 +49,9 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
 # Function for reading the images
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
+    update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
     initialize_classes_counter()
-    update_db_prefix(DB_PREFIX)
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
@@ -70,7 +72,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
             if filename not in img_labels.keys():  # If it is the first label for that img
                 img_labels[filename] = [file_path]
 
-            if object_class_adjusted != FALSE_NEGATIVE_CLASS:  # Add only useful labels (not false negatives)
+            if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
                 img_labels[filename].append(darknet_label)
 
     # COUNT FALSE NEGATIVES (IMG WITHOUT LABELS)
@@ -96,7 +98,8 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     if total_false_negatives > max_false_data:
         total_false_negatives = max_false_data
 
-    add_false_negatives(total_false_negatives, total_false_negatives_dir, output_train_dir_path, train_text_file)
+    if ADD_FALSE_DATA:
+        add_false_negatives(total_false_negatives, total_false_negatives_dir, output_train_dir_path, train_text_file)
 
     #  max_imgs = 1000
     for filename in total_annotated_images_dir.keys():

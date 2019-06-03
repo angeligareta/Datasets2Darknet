@@ -2,21 +2,25 @@
 # as MAX_WIDTH, the setting will be common for the dataset specific parsers.
 import cv2
 import os
+import re
 import numpy as np
 import random as rand
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 
-FALSE_NEGATIVE_CLASS = 100  # Class that will contain all the negative samples.
-FALSE_NEGATIVE_CLASS_NAME = 'false-negative'
+CLASS_NUMBER = 10
+
+OTHER_CLASS = 100  # Class that will contain all the negative samples.
+OTHER_CLASS_NAME = 'other'
 
 MAX_WIDTH = 608  # Width that the image will be resized to.
 MAX_HEIGHT = 608  # Height that the image will be resized to.
 
-TRAIN_PROB = 0.9
-TEST_PROB = 0.1
+TRAIN_PROB = 0.8
+TEST_PROB = 0.2
 
+ADD_FALSE_DATA = False
 SHOW_IMG = False # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
 OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed. 
@@ -28,9 +32,9 @@ OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed.
 # the specific object id and the general one (common to all the datasets.)
 traffic_sign_classes = {}
 
-classes_counter_train = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-classes_counter_test = [0, 0, 0, 0, 0, 0, 0, 0]
-classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "STOP", "YIELD", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
+classes_counter_train = [0] * (CLASS_NUMBER + 1)
+classes_counter_test = [0] * CLASS_NUMBER
+classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "INFORMATION", "STOP", "YIELD", "NOENTRY", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
 
 # Prefix for each dataset parser. That way you can handle things different 
 # depending on the dataset from here. 
@@ -105,26 +109,29 @@ def show_img(img, object_lb_x1, object_lb_y1, object_width, object_height):
     ax.add_patch(rect)
     plt.show()
 
+# CHeck for the case 3_11_20 is in 3_11_n
 
 # This method converts the specific obj_class to the common one
 # using traffic_sign_classes data structure.
 def adjust_object_class(obj_class):
     for classes in traffic_sign_classes.items():
-        if obj_class in classes[1]:
-            object_class_adjusted = int(classes[0].split("-")[0])
-            return object_class_adjusted
+        for class_ in classes[1]:
+            if (obj_class == class_) | ((re.search("_r|_n", class_) != None) & (class_[:-1] in obj_class)):
+                object_class_adjusted = int(classes[0].split("-")[0])
+                return object_class_adjusted
 
-    return FALSE_NEGATIVE_CLASS
+    return OTHER_CLASS
 
 # This method converts the specific obj_class to the common one
 # using traffic_sign_classes data structure.
 def get_object_label(obj_class):
     for classes in traffic_sign_classes.items():
-        if obj_class in classes[1]:
-            object_class_adjusted = classes[0].split("-")[1]
-            return object_class_adjusted
+        for class_ in classes[1]:
+            if (obj_class == class_) | ((re.search("_r|_n", class_) != None) & (class_[:-1] in obj_class)):
+                object_class_adjusted = classes[0].split("-")[1]
+                return object_class_adjusted
 
-    return FALSE_NEGATIVE_CLASS_NAME
+    return OTHER_CLASS_NAME
 
 
 # Returns a string with the darknet label for the received object_class, 
@@ -240,7 +247,9 @@ def print_db_info(classes_counter_train, classes_counter_test):
 
 # Given two arrays, returns the sum of them.
 def add_arrays(array_1, array_2):
-    for i in range(0, len(array_1)):
-        array_2[i] += array_1[i]
+    total_array = array_2.copy()
 
-    return array_2.copy()
+    for i in range(0, len(array_1)):
+        total_array[i] += array_1[i]
+
+    return total_array

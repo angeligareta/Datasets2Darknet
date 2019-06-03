@@ -16,12 +16,14 @@ DB_PREFIX = 'mastif-'
 
 
 def initialize_traffic_sign_classes():
-    traffic_sign_classes["0-prohibitory"] = ["B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20", "B21", "B22", "B23", "B24", "B25", "B26", "B27", "B28", "B29", "B30", "B31", "B32", "B33", "B34", "B35", "B36", "B37", "B38"]
+    traffic_sign_classes.clear()
+    traffic_sign_classes["0-prohibitory"] = ["B03", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20", "B21", "B22", "B23", "B24", "B25", "B26", "B27", "B28", "B29", "B30", "B31", "B32", "B33", "B34", "B35", "B36", "B37", "B38"]
     traffic_sign_classes["1-danger"] = ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27", "A28", "A29", "A30", "A31", "A32", "A33", "A34", "A35", "A36", "A37", "A38", "A39", "A40", "A41", "A42", "A43", "A44", "A45", "A46"]
     traffic_sign_classes["2-mandatory"] = ["B44", "B45", "B46", "B47", "B48", "B49", "B50", "B51", "B52", "B53", "B54", "B55", "B56", "B57", "B58", "B59", "B60", "B61", "B62"]
     traffic_sign_classes["3-stop"] = ["B02"]
     traffic_sign_classes["4-yield"] = ["B01"]
-    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = []  # undefined, other, redbluecircles, diamonds
+    traffic_sign_classes["5-noentry"] = ["B04"]
+    traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []  # undefined, other, redbluecircles, diamonds
 
 
 # It depends on the row format
@@ -59,7 +61,7 @@ def add_file_to_dir(row, subfolder_name, img_labels):
             darknet_label = calculate_darknet_format(input_img, MAX_WIDTH, MAX_HEIGHT, row)
 
             object_class_adjusted = int(darknet_label.split()[0])                   
-            if object_class_adjusted != FALSE_NEGATIVE_CLASS:  # Add only useful labels (not false negatives)
+            if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
                 img_labels[subfolder_name + "-" + filename].append(darknet_label)
                 # print("\t" + darknet_label)
 
@@ -67,9 +69,9 @@ def add_file_to_dir(row, subfolder_name, img_labels):
 
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
+    update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
     initialize_classes_counter()
-    update_db_prefix(DB_PREFIX)
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
@@ -116,7 +118,8 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     if total_false_negatives > max_false_data:
         total_false_negatives = max_false_data
 
-    add_false_negatives(total_false_negatives, total_false_negatives_dir, output_train_dir_path, train_text_file)
+    if ADD_FALSE_DATA:
+        add_false_negatives(total_false_negatives, total_false_negatives_dir, output_train_dir_path, train_text_file)
 
     # SET ANNOTATED IMAGES IN TRAIN OR TEST DIRECTORIES
     for filename in total_annotated_images_dir.keys():

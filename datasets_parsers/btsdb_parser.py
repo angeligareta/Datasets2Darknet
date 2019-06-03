@@ -18,13 +18,15 @@ DB_PREFIX = 'btsdb-'
 
 
 def initialize_traffic_sign_classes():
+    traffic_sign_classes.clear()
     # Superclasses BTSDB
     traffic_sign_classes["0-prohibitory"] = [2, 8]
     traffic_sign_classes["1-danger"] = [1]
     traffic_sign_classes["2-mandatory"] = [3]
     traffic_sign_classes["3-stop"] = [7]
     traffic_sign_classes["4-yield"] = [6]
-    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = [-1, 0, 4, 5, 9, 10, 11]  # undefined, other, redbluecircles, diamonds
+    traffic_sign_classes["5-noentry"] = [42]
+    traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = [-1, 0, 4, 5, 9, 10, 11]  # undefined, other, redbluecircles, diamonds
 
 
 # It depends on the row format
@@ -38,7 +40,11 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
     right_x = float(row[3]) / width_proportion
     top_y = float(row[4]) / height_proportion
 
-    object_class = int(row[6])
+    specific_object_class = int(row[5])
+    if (specific_object_class == 42): # Save noentry signs
+        object_class = specific_object_class
+    else:
+        object_class = int(row[6])
     object_class_adjusted = adjust_object_class(object_class)  # Adjust class category
 
     if SHOW_IMG:
@@ -49,9 +55,9 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
 
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
+    update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
     initialize_classes_counter()
-    update_db_prefix(DB_PREFIX)
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
@@ -72,7 +78,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
             if filename not in img_labels.keys():  # If it is the first label for that img
                 img_labels[filename] = [file_path]
 
-            if object_class_adjusted != FALSE_NEGATIVE_CLASS:  # Add only useful labels (not false negatives)
+            if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
                 img_labels[filename].append(darknet_label)
 
     # COUNT FALSE NEGATIVES (IMG WITHOUT LABELS)
@@ -94,7 +100,8 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     print("total_false_data: " + str(total_false_data))
 
     # ADD FALSE IMAGES TO TRAIN
-    add_false_data(total_false_data, total_false_negatives_dir, BACKGROUND_IMG_PATH, output_train_dir_path, train_text_file)
+    if ADD_FALSE_DATA:
+        add_false_data(total_false_data, total_false_negatives_dir, BACKGROUND_IMG_PATH, output_train_dir_path, train_text_file)
 
     # SET ANNOTATED IMAGES IN TRAIN OR TEST DIRECTORIES
     # max_imgs = 1000

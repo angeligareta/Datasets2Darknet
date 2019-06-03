@@ -16,15 +16,10 @@ BACKGROUND_IMG_PATH = LISATS_ROOT_PATH + "input-img-bg/"
 
 DB_PREFIX = 'lisats-'
 
-
 def initialize_traffic_sign_classes():
-    # Superclasses BTSDB
-    traffic_sign_classes["0-prohibitory"] = []
-    traffic_sign_classes["1-danger"] = []
-    traffic_sign_classes["2-mandatory"] = []
-    traffic_sign_classes["3-stop"] = ["stop"]
-    traffic_sign_classes["4-yield"] = ["yield"]
-    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = []
+    traffic_sign_classes.clear()
+    traffic_sign_classes["4-stop"] = ["stop"]
+    traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []
 
 
 # It depends on the row format
@@ -49,15 +44,16 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
 
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
+    update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
     initialize_classes_counter()
-    update_db_prefix(DB_PREFIX)
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
 
     gt_file = open(COMBINED_ANNOTATIONS_FILE_PATH)  # Annotations file
     gt_reader = csv.reader(gt_file, delimiter=';')  # CSV parser for annotations file
+
 
     # WRITE ALL THE DATA IN A DICTIONARY (TO GROUP LABELS ON SAME IMG)
     for row in gt_reader:
@@ -72,7 +68,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
             if filename not in img_labels.keys():  # If it is the first label for that img
                 img_labels[filename] = [file_path]
 
-            if object_class_adjusted != FALSE_NEGATIVE_CLASS:  # Add only useful labels (not false negatives)
+            if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
                 img_labels[filename].append(darknet_label)
 
     # COUNT FALSE NEGATIVES (IMG WITHOUT LABELS)

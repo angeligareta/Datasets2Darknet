@@ -4,7 +4,7 @@ import re
 import os.path
 from common_config import *
 
-ANNOTATIONS_FOLDERS = ["dayTrain", "nightTrain"]
+ANNOTATIONS_FOLDERS = ["dayTrain"]
 ANNOTATIONS_FILENAME = "frameAnnotationsBOX.csv"
 
 # Path to the ppm images of the MASTIF dataset.
@@ -12,10 +12,11 @@ INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/VIVA/"
 DB_PREFIX = 'viva-'
 
 def initialize_traffic_sign_classes():
-    traffic_sign_classes["5-tlred"] = ["stop", "stopLeft"]
-    traffic_sign_classes["6-tlamber"] = ["warning", "warningLeft"] 
-    traffic_sign_classes["7-tlgreen"] = ["go", "goForward", "goLeft"]
-    traffic_sign_classes[str(FALSE_NEGATIVE_CLASS) + "-false_negatives"] = []
+    traffic_sign_classes.clear()
+    traffic_sign_classes["7-tlred"] = ["stop", "stopLeft"]
+    traffic_sign_classes["8-tlamber"] = ["warning", "warningLeft"] 
+    traffic_sign_classes["9-tlgreen"] = ["go", "goForward", "goLeft"]
+    traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []
 
 
 # It depends on the row format
@@ -52,7 +53,7 @@ def add_file_to_dir(row, subfolder_path, img_labels):
         darknet_label = calculate_darknet_format(input_img, MAX_WIDTH, MAX_HEIGHT, row)
 
         object_class_adjusted = int(darknet_label.split()[0])                   
-        if object_class_adjusted != FALSE_NEGATIVE_CLASS:  # Add only useful labels (not false negatives)
+        if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
             img_labels[filename].append(darknet_label)
             # print("\t" + str(img_labels[filename]))
     else: 
@@ -60,9 +61,9 @@ def add_file_to_dir(row, subfolder_path, img_labels):
 
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
+    update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
     initialize_classes_counter()
-    update_db_prefix(DB_PREFIX)
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
