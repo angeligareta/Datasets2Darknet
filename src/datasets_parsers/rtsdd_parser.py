@@ -11,6 +11,8 @@ RTSDD_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/RTSD-D/"
 ANNOTATIONS_FILE_NAME = "full-gt.csv"
 IMAGES_DIR_NAME = "rtsd-frames/"
 
+RESIZE_PERCENTAGE = 0.6
+
 DB_PREFIX = 'rtsdd-'
 
 def initialize_traffic_sign_classes():
@@ -27,10 +29,13 @@ def initialize_traffic_sign_classes():
 
 
 # It depends on the row format
-def calculate_darknet_format(input_img, image_width, image_height, row):
+def calculate_darknet_format(input_img, row):
     real_img_width, real_img_height = get_img_dim_plt(input_img)
-    width_proportion = (real_img_width / MAX_WIDTH)
-    height_proportion = (real_img_height / MAX_HEIGHT)
+    image_width = int(real_img_width * RESIZE_PERCENTAGE)
+    image_height = int(real_img_height * RESIZE_PERCENTAGE)
+
+    width_proportion = (real_img_width / image_width)
+    height_proportion = (real_img_height / image_height)
 
     object_lb_x1 = float(row[1]) / width_proportion
     object_lb_y1 = float(row[2]) / height_proportion
@@ -41,7 +46,7 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
     object_class_adjusted = adjust_object_class(object_class)  # Adjust class category
 
     if (SHOW_IMG):
-        show_img(resize_img_plt(input_img), object_lb_x1, object_lb_y1, object_width, object_height)
+        show_img(resize_img_plt(input_img, image_width, image_height), object_lb_x1, object_lb_y1, object_width, object_height)
 
     return parse_darknet_format(object_class_adjusted, image_width, image_height, 
                                 object_lb_x1, object_lb_y1, object_lb_x1 + object_width, object_lb_y1 + object_height)
@@ -72,7 +77,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
 
             if os.path.isfile(file_path):
                 input_img = read_img_plt(file_path)
-                darknet_label = calculate_darknet_format(input_img, MAX_WIDTH, MAX_HEIGHT, row)
+                darknet_label = calculate_darknet_format(input_img, row)
                 object_class_adjusted = int(darknet_label.split()[0])
 
                 if filename not in img_labels.keys():  # If it is the first label for that img
@@ -116,7 +121,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
         input_img_file_path = img_labels[filename][0]
         # Read image from image_file_path
         input_img = read_img(input_img_file_path)
-        input_img = resize_img(input_img)  # Resize img
+        input_img = resize_img_percentage(input_img, RESIZE_PERCENTAGE)  # Resize img
         input_img_labels = img_labels[filename][1:]
 
         # Get percentage for train and another for testing

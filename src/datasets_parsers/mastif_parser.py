@@ -12,6 +12,8 @@ ANNOTATIONS_FILENAME = "index.seq"
 # Path to the ppm images of the MASTIF dataset.
 INPUT_PATH = MASTIF_ROOT_PATH + "input-img/"
 
+RESIZE_PERCENTAGE = 0.9
+
 DB_PREFIX = 'mastif-'
 
 
@@ -28,10 +30,12 @@ def initialize_traffic_sign_classes():
 
 
 # It depends on the row format
-def calculate_darknet_format(input_img, image_width, image_height, row):
+def calculate_darknet_format(input_img, row):
     real_img_width, real_img_height = get_img_dim_plt(input_img)
-    width_proportion = (real_img_width / MAX_WIDTH)
-    height_proportion = (real_img_height / MAX_HEIGHT)
+    image_width = int(real_img_width * RESIZE_PERCENTAGE)
+    image_height = int(real_img_height * RESIZE_PERCENTAGE)
+    width_proportion = (real_img_width / image_width)
+    height_proportion = (real_img_height / image_height)
 
     x = float(row[2]) / width_proportion
     y = float(row[3]) / height_proportion
@@ -42,7 +46,7 @@ def calculate_darknet_format(input_img, image_width, image_height, row):
     object_class_adjusted = adjust_object_class(object_class)  # Adjust class category
 
     if SHOW_IMG:
-        show_img(resize_img_plt(input_img), x, y, w, h)
+        show_img(resize_img_plt(input_img, image_width, image_height), x, y, w, h)
 
     return parse_darknet_format(object_class_adjusted, image_width, image_height, x, y, x + w, y + h)
 
@@ -59,7 +63,7 @@ def add_file_to_dir(row, subfolder_name, img_labels):
         # Loop for all the labels in the row and calculate darknet format every 5.
         while (len(row) > 1):
             input_img = read_img_plt(file_path)
-            darknet_label = calculate_darknet_format(input_img, MAX_WIDTH, MAX_HEIGHT, row)
+            darknet_label = calculate_darknet_format(input_img, row)
 
             object_class_adjusted = int(darknet_label.split()[0])                   
             if object_class_adjusted != OTHER_CLASS:  # Add only useful labels (not false negatives)
@@ -126,7 +130,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     for filename in total_annotated_images_dir.keys():
         input_img_file_path = img_labels[filename][0]
         input_img = read_img(input_img_file_path)  # Read image from image_file_path
-        input_img = resize_img(input_img)  # Resize img
+        input_img = resize_img_percentage(input_img, RESIZE_PERCENTAGE)  # Resize img
         input_img_labels = img_labels[filename][1:]
 
         # Get percentage for train and another for testing

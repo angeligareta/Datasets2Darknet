@@ -14,8 +14,8 @@ CLASS_NUMBER = 10
 OTHER_CLASS = 100  # Class that will contain all the negative samples.
 OTHER_CLASS_NAME = 'other'
 
-MAX_WIDTH = 608  # Width that the image will be resized to.
-MAX_HEIGHT = 608  # Height that the image will be resized to.
+# MAX_WIDTH = 608  # Width that the image will be resized to.
+# MAX_HEIGHT = 608  # Height that the image will be resized to.
 
 TRAIN_PROB = 0.8
 TEST_PROB = 0.2
@@ -86,12 +86,19 @@ def write_img(output_file_path, output_img):
 
 # Returns an opencv image resized to MAX_WIDTH and MAX_HEIGHT.
 def resize_img(input_img):
-    return cv2.resize(input_img, (MAX_WIDTH, MAX_HEIGHT))
+    return input_img
+    # return cv2.resize(input_img, (MAX_WIDTH, MAX_HEIGHT))
+
+def resize_img_percentage(input_img, percentage):
+    image_width, image_height = get_img_dim(input_img)
+    image_width = int(image_width * percentage)
+    image_height = int(image_height * percentage)
+    return cv2.resize(input_img, (image_width, image_height))
 
 
 # Returns an plt image resized to MAX_WIDTH and MAX_HEIGHT.
-def resize_img_plt(input_img):
-    return np.asarray(input_img.resize((MAX_WIDTH, MAX_HEIGHT)))
+def resize_img_plt(input_img, image_width, image_height):
+    return np.asarray(input_img.resize((image_width, image_height)))
 
 
 # Shows an input image with a bounding box using plt.
@@ -166,14 +173,16 @@ def write_data(filename, input_img, input_img_labels, text_file, output_dir, tra
 
     # SAVE TXT FILE WITH THE IMG
     f = open(output_file_path + '.txt', "a")
+    labels_to_print = ""
     for input_img_label in input_img_labels:
-        f.write(input_img_label + "\n")
+        labels_to_print += input_img_label + "\n"
 
         object_class = int(input_img_label.split()[0])
         if train_file:
             classes_counter_train[object_class] += 1
         else:
             classes_counter_test[object_class] += 1
+    f.write(labels_to_print)
 
 
 # Chooses a total number of bg_files randomly from background_img_path and 
