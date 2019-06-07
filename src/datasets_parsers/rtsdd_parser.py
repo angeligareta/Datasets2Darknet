@@ -97,10 +97,19 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
 
     total_annotated_images = len(img_labels.keys()) - len(total_false_negatives_dir.keys())
     total_false_negatives = len(total_false_negatives_dir.keys())
+    max_false_data = round(total_annotated_images * TRAIN_PROB)  # False data: False negative + background
 
     print("total_false_negatives: " + str(total_false_negatives))
     print("total_annotated_images: " + str(total_annotated_images) + " == "
           + str(len(total_annotated_images_dir.keys())))
+    print("MAX FALSE DATA: " + str(max_false_data))
+
+    # ADD FALSE IMAGES TO TRAIN
+    if total_false_negatives > max_false_data:
+        total_false_negatives = max_false_data
+
+    if ADD_FALSE_DATA:
+        add_false_negatives(total_false_negatives, total_false_negatives_dir, output_train_dir_path, train_text_file)
 
     #  max_imgs = 1000
     for filename in total_annotated_images_dir.keys():

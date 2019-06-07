@@ -20,7 +20,7 @@ MAX_HEIGHT = 608  # Height that the image will be resized to.
 TRAIN_PROB = 0.8
 TEST_PROB = 0.2
 
-ADD_FALSE_DATA = False
+ADD_FALSE_DATA = True
 SHOW_IMG = False # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
 OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed. 

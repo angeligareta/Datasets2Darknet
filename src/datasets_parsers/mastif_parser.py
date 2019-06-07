@@ -20,9 +20,10 @@ def initialize_traffic_sign_classes():
     traffic_sign_classes["0-prohibitory"] = ["B03", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20", "B21", "B22", "B23", "B24", "B25", "B26", "B27", "B28", "B29", "B30", "B31", "B32", "B33", "B34", "B35", "B36", "B37", "B38"]
     traffic_sign_classes["1-danger"] = ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27", "A28", "A29", "A30", "A31", "A32", "A33", "A34", "A35", "A36", "A37", "A38", "A39", "A40", "A41", "A42", "A43", "A44", "A45", "A46"]
     traffic_sign_classes["2-mandatory"] = ["B44", "B45", "B46", "B47", "B48", "B49", "B50", "B51", "B52", "B53", "B54", "B55", "B56", "B57", "B58", "B59", "B60", "B61", "B62"]
-    traffic_sign_classes["3-stop"] = ["B02"]
-    traffic_sign_classes["4-yield"] = ["B01"]
-    traffic_sign_classes["5-noentry"] = ["B04"]
+    traffic_sign_classes["3-information"] = ["C01", "C02", "C03", "C05", "C06", "C10", "C29", "C30", "C31", "C32", "C33", "C34", "C35", "C36", "C37", "C38", "C39", "C40", "C41", "C42", "C43", "C44", "C45", "C46", "C47", "C48", "C49", "C50", "C51", "C52", "C53", "C54", "C55", "C56", "C57", "C58", "C59", "C60", "C61", "C62", "C63", "C64", "C65", "C68", "C69", "C70", "C71", "C72", "C73", "C75", "C77", "C86", "C88", "C89", "C90", "C91", "C92", "C93", "C96"]
+    traffic_sign_classes["4-stop"] = ["B02"]
+    traffic_sign_classes["5-yield"] = ["B01"]
+    traffic_sign_classes["6-noentry"] = ["B04"]
     traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []  # undefined, other, redbluecircles, diamonds
 
 
