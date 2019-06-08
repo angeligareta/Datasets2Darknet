@@ -7,7 +7,7 @@ import csv
 from common_config import *
 
 LISATS_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/LISATS/"
-RESIZE_PERCENTAGE = 0.7
+RESIZE_PERCENTAGE = 0.8
 COMBINED_ANNOTATIONS_FILE_PATH = LISATS_ROOT_PATH + "allAnnotations.csv"
 
 # Path to the ppm images of the BTSDB dataset.
@@ -19,6 +19,7 @@ DB_PREFIX = 'lisats-'
 def initialize_traffic_sign_classes():
     traffic_sign_classes.clear()
     traffic_sign_classes["4-stop"] = ["stop"]
+    traffic_sign_classes["5-yield"] = ["yield"]
     traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []
 
 
