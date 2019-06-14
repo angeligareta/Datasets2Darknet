@@ -8,9 +8,9 @@ ANNOTATIONS_FOLDERS = ["dayTrain"]
 ANNOTATIONS_FILENAME = "frameAnnotationsBOX.csv"
 
 # Path to the ppm images of the MASTIF dataset.
-INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/VIVA/"
+INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/LISATL/"
 RESIZE_PERCENTAGE = 0.45
-DB_PREFIX = 'viva-'
+DB_PREFIX = 'lisatl-'
 
 def initialize_traffic_sign_classes():
     traffic_sign_classes.clear()
