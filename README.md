@@ -14,6 +14,24 @@
 
 Datasets2Darknet allows you to merge multiple datasets into one while converting them to Darknet format. It is very modular, easing the process of adding new datasets.
 
+## Current available datasets
+The idea of this section is to add parsers for new object datasets, with the aim of supporting the unification of the maximum possible number of different datasets. Darknet labels vary depending on the task. The labels for Detection Task *(./darknet detector)* are not the same that the ones for Classification Task *(./darknet classifier)*. 
+
+For the moment, in the [dataset_parsers](./src/datasets_parsers/) folder there are available the following datasets.
+
+### Detection Task
+#### Traffic Sign Datasets
+- [German Traffic Sign Recognition Benchmark](http://benchmark.ini.rub.de/) - Dataset Parser at [src/datasets_parsers/gtsdb_parser](./src/datasets_parsers/gtsdb_parser.py)
+- [Belgium Traffic Sign Dataset:](https://btsd.ethz.ch/shareddata/) - Dataset Parser at [src/datasets_parsers/btsdb_parser](./src/datasets_parsers/btsdb_parser.py)
+- [Mapping and Assessing the State of Traffic InFrastructure (MASTIF) Dataset](http://www.zemris.fer.hr/~ssegvic/mastif/datasets.shtml) - Dataset Parser at [src/datasets_parsers/mastif_parser](./src/datasets_parsers/mastif_parser.py)
+- [LISA Traffic Sign Dataset](http://cvrr.ucsd.edu/vivachallenge/index.php/signs/sign-detection/) - Dataset Parser at [src/datasets_parsers/lisats_parser](./src/datasets_parsers/lisats_parser.py)
+- [Russian Traffic Sign Dataset](http://graphics.cs.msu.ru/en/research/projects/rtsd) - Dataset Parser at [src/datasets_parsers/rtsdd_parser](./src/datasets_parsers/rtsdd_parser.py)
+### Traffic Light Datasets
+- [LISA Traffic Light Dataset](http://cvrr.ucsd.edu/LISA/lisa-traffic-sign-dataset.html) - Dataset Parser at [src/datasets_parsers/lisatl_parser](./src/datasets_parsers/lisatl_parser.py)
+
+### Classification Task
+- [Russian Traffic Sign Dataset](http://graphics.cs.msu.ru/en/research/projects/rtsd) - Dataset Parser at [src/datasets_parsers/rtsdc_parser](./src/datasets_parsers/rtsdc_parser.py)
+
 ## Main files 
 ### Common Config (common_config.py)
 All the common methods for the specific dataset parsers are contained in this file, for instance: read_image, resize_image, write_data and so on. Feel free to check them out, each one is documented. 
