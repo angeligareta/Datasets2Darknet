@@ -9,37 +9,34 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image
 
-CLASS_NUMBER = 10
+# TO CHANGE
+CLASS_NUMBER = 10 
+classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "INFORMATION", "STOP", "YIELD", "NOENTRY", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
 
-OTHER_CLASS = 100  # Class that will contain all the negative samples.
+# No need to change
+OTHER_CLASS = CLASS_NUMBER + 1 # Class that will contain all the negative samples.
 OTHER_CLASS_NAME = 'other'
 
-# MAX_WIDTH = 608  # Width that the image will be resized to.
-# MAX_HEIGHT = 608  # Height that the image will be resized to.
+classes_counter_train = [0] * (CLASS_NUMBER + 1)
+classes_counter_test = [0] * CLASS_NUMBER
 
 TRAIN_PROB = 0.8
 TEST_PROB = 0.2
-
 ADD_FALSE_DATA = False
+
 SHOW_IMG = False # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
 OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed. 
 
+# Prefix for each dataset parser. That way you can handle things different 
+# depending on the dataset from here. 
+DB_PREFIX = '' 
 
 # In the specific datasets, each object class has a different object id.
 # Example: (speedlimit => 26 in BTSDB but speedlimit => 5 in GTSDB).
 # For this reason, traffic_sign_classes structure creates a relation between
 # the specific object id and the general one (common to all the datasets.)
 traffic_sign_classes = {}
-
-classes_counter_train = [0] * (CLASS_NUMBER + 1)
-classes_counter_test = [0] * CLASS_NUMBER
-classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "INFORMATION", "STOP", "YIELD", "NOENTRY", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
-
-# Prefix for each dataset parser. That way you can handle things different 
-# depending on the dataset from here. 
-DB_PREFIX = '' 
-
 
 # Method that initialize the classes counter.
 # (Necessary at the start of each datasets parser)
@@ -233,7 +230,7 @@ def add_false_data(total_false_data, total_false_negatives_dir, background_img_p
 
 # Prints the object's number of each class of the received array.
 def print_class_info(classes_counter):
-    for i in range(0, len(classes_counter)):
+    for i in range(0, min(len(classes_names), len(classes_counter))):
         print('\t- CLASS ' + str(i) + " - " + classes_names[i] + ' : ' + str(classes_counter[i]))
     print('TOTAL: ' + str(sum(classes_counter)))
 
@@ -247,7 +244,7 @@ def print_db_info(classes_counter_train, classes_counter_test):
     print_class_info(classes_counter_test)
 
     print("\n[PROPORTION]")
-    for i in range(0, len(classes_counter_test)):
+    for i in range(0, min(len(classes_counter_train), len(classes_counter_test))):
         total_classes = classes_counter_train[i] + classes_counter_test[i]
         if total_classes == 0:
             total_classes = 1

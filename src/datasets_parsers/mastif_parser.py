@@ -4,17 +4,15 @@ import re
 import os.path
 from common_config import *
 
+# TO CHANGE
 MASTIF_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/MASTIF/"
+RESIZE_PERCENTAGE = 0.9
+DB_PREFIX = 'mastif-'
+
 
 ANNOTATIONS_FOLDERS = ["TS2009", "TS2010", "TS2011"]
 ANNOTATIONS_FILENAME = "index.seq"
-
-# Path to the ppm images of the MASTIF dataset.
 INPUT_PATH = MASTIF_ROOT_PATH + "input-img/"
-
-RESIZE_PERCENTAGE = 0.9
-
-DB_PREFIX = 'mastif-'
 
 
 def initialize_traffic_sign_classes():

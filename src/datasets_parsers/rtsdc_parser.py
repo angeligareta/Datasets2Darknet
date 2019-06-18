@@ -6,17 +6,20 @@
 import csv
 from common_config import *
 
+# TO CHANGE
 GTSDB_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/RTSD-C/"
+RESIZE_PERCENTAGE = 1
+DB_PREFIX = 'rtsd-'
+# Supported class names
+CLASS_NAMES = ["sl10sl", "sl20sl", "sl30sl", "sl40sl", "sl50sl", "sl60sl", "sl70sl", "sl80sl"]
+
 
 INPUT_PATH = GTSDB_ROOT_PATH + "input-img/"  # Path to the ppm images of the GTSRB dataset.
 ANNOTATIONS_FOLDERS = ["rtsd-r1", "rtsd-r3"]
-# ANNOTATIONS_FILENAME = "gt_train.csv"
 
-DB_PREFIX = 'rtsd-'
-
-CLASS_NAMES = ["sl10sl", "sl20sl", "sl30sl", "sl40sl", "sl50sl", "sl60sl", "sl70sl", "sl80sl"]
 
 def initialize_traffic_sign_classes(dif): # dif should be 2 in the rtsd-r3 dataset
+    traffic_sign_classes.clear()
     traffic_sign_classes["0-sl10sl"] = [39 + dif]
     traffic_sign_classes["1-sl20sl"] = [40 + dif]
     traffic_sign_classes["2-sl30sl"] = [41 + dif]
@@ -73,6 +76,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
                         if (adjusted_class_name != OTHER_CLASS_NAME):                            
                             image_path = subsubfolder_path + "/" + filename
                             image = read_img(image_path)
+                            image = resize_img_percentage(image, RESIZE_PERCENTAGE)
                             # print(output_filename)
 
                             output_filename = str(class_index) + "_" + adjusted_class_name + OUTPUT_IMG_EXTENSION

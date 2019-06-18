@@ -6,14 +6,14 @@
 import csv
 from common_config import *
 
+# TO CHANGE
 RTSDD_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/RTSD-D/"
+RESIZE_PERCENTAGE = 0.6
+DB_PREFIX = 'rtsdd-'
+
 
 ANNOTATIONS_FILE_NAME = "full-gt.csv"
 IMAGES_DIR_NAME = "rtsd-frames/"
-
-RESIZE_PERCENTAGE = 0.6
-
-DB_PREFIX = 'rtsdd-'
 
 def initialize_traffic_sign_classes():
     traffic_sign_classes.clear()
@@ -33,7 +33,6 @@ def calculate_darknet_format(input_img, row):
     real_img_width, real_img_height = get_img_dim_plt(input_img)
     image_width = int(real_img_width * RESIZE_PERCENTAGE)
     image_height = int(real_img_height * RESIZE_PERCENTAGE)
-
     width_proportion = (real_img_width / image_width)
     height_proportion = (real_img_height / image_height)
 

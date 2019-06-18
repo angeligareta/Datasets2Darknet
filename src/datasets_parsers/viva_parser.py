@@ -4,13 +4,15 @@ import re
 import os.path
 from common_config import *
 
-ANNOTATIONS_FOLDERS = ["dayTrain"]
-ANNOTATIONS_FILENAME = "frameAnnotationsBOX.csv"
-
-# Path to the ppm images of the MASTIF dataset.
+# TO CHANGE
 INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/VIVA/"
 RESIZE_PERCENTAGE = 0.45
 DB_PREFIX = 'viva-'
+
+
+ANNOTATIONS_FOLDERS = ["dayTrain"]
+ANNOTATIONS_FILENAME = "frameAnnotationsBOX.csv"
+
 
 def initialize_traffic_sign_classes():
     traffic_sign_classes.clear()
