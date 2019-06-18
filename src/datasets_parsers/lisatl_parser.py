@@ -5,10 +5,9 @@ import os.path
 from common_config import *
 
 # TO CHANGE
-INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/VIVA/"
+INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/LISATL/"
 RESIZE_PERCENTAGE = 0.45
-DB_PREFIX = 'viva-'
-
+DB_PREFIX = 'lisatl-'
 
 ANNOTATIONS_FOLDERS = ["dayTrain"]
 ANNOTATIONS_FILENAME = "frameAnnotationsBOX.csv"
