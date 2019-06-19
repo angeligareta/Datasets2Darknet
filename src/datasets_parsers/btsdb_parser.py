@@ -8,7 +8,7 @@ from common_config import *
 
 # TO CHANGE
 BTSDB_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/BTSDB/"
-RESIZE_PERCENTAGE = 1
+RESIZE_PERCENTAGE = 0.4
 DB_PREFIX = 'btsdb-'
 
 
@@ -55,6 +55,16 @@ def calculate_darknet_format(input_img, row):
         show_img(resize_img_plt(input_img, image_width, image_height), left_x, bottom_y, (right_x - left_x), (top_y - bottom_y))
 
     return parse_darknet_format(object_class_adjusted, image_width, image_height, left_x, bottom_y, right_x, top_y)
+
+
+def update_global_variables(train_pct, test_pct, color_mode, verbose, false_data, output_img_ext):
+    global TRAIN_PROB, TEST_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
+    TRAIN_PROB = train_pct
+    TEST_PROB = test_pct
+    COLOR_MODE = color_mode
+    SHOW_IMG = verbose
+    ADD_FALSE_DATA = false_data
+    OUTPUT_IMG_EXTENSION = output_img_ext
 
 
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):

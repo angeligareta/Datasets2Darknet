@@ -34,13 +34,29 @@ def initialize_traffic_sign_classes(dif): # dif should be 2 in the rtsd-r3 datas
 def get_max_index(images_folder):
     if os.path.isdir(images_folder):
         images_names = os.listdir(images_folder)
-        images_indexes = list(map(lambda name: int(name.split("_")[0]), images_names))
-        max_index = max(images_indexes)
-        print(max_index)
-        
+        max_index = 0
+        for name in images_names: 
+            splitted_name = name.split("_")
+            if(splitted_name[0].isdigit() & len(splitted_name) > 1):
+                index = int(splitted_name[0])
+                if(max_index < index):
+                    max_index = index
+
+        print(max_index)        
         return max_index
     else:
         raise Exception("Subfolder " + images_folder + "does not exist!")
+
+
+def update_global_variables(train_pct, test_pct, color_mode, verbose, false_data, output_img_ext):
+    global TRAIN_PROB, TEST_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
+    TRAIN_PROB = train_pct
+    TEST_PROB = test_pct
+    COLOR_MODE = color_mode
+    SHOW_IMG = verbose
+    ADD_FALSE_DATA = false_data
+    OUTPUT_IMG_EXTENSION = output_img_ext
+
 
 # Function for reading the images
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):

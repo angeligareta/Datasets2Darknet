@@ -63,6 +63,17 @@ def add_file_to_dir(row, subfolder_path, img_labels):
     else: 
         print("Image " + file_path + " not found")
 
+
+def update_global_variables(train_pct, test_pct, color_mode, verbose, false_data, output_img_ext):
+    global TRAIN_PROB, TEST_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
+    TRAIN_PROB = train_pct
+    TEST_PROB = test_pct
+    COLOR_MODE = color_mode
+    SHOW_IMG = verbose
+    ADD_FALSE_DATA = false_data
+    OUTPUT_IMG_EXTENSION = output_img_ext
+    
+
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
     update_db_prefix(DB_PREFIX)
@@ -75,12 +86,12 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     # Loop between datasets subfolders
     for subfolder_name in ANNOTATIONS_FOLDERS:
         subfolder_path = INPUT_PATH + subfolder_name         
-        print(subfolder_path)
+        # print(subfolder_path)
 
         for subsubfolder_name in os.listdir(subfolder_path):
             subsubfolder_path = subfolder_path + "/" + subsubfolder_name
             if os.path.isdir(subsubfolder_path):
-                print("Fetching data from " + subsubfolder_name + "...")
+                # print("Fetching data from " + subsubfolder_name + "...")
                 subfolder_annotation_filename = subsubfolder_path + "/" + ANNOTATIONS_FILENAME
 
                 # Check if annotation file exists

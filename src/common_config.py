@@ -46,8 +46,7 @@ def initialize_classes_counter():
 
     for i in range(0, len(classes_counter_test)):
         classes_counter_test[i] = 0
-
-
+    
 # Method that updates the db_prefix. 
 # (Necessary at the start of each datasets parser)
 def update_db_prefix(db_prefix):
@@ -118,9 +117,12 @@ def show_img(img, object_lb_x1, object_lb_y1, object_width, object_height):
 # This method converts the specific obj_class to the common one
 # using traffic_sign_classes data structure.
 def adjust_object_class(obj_class):
+    text_obj_class = str(obj_class)
+
     for classes in traffic_sign_classes.items():
         for class_ in classes[1]:
-            if (obj_class == class_) | ((re.search("_r|_n", class_) != None) & (class_[:-1] in obj_class)):
+            text_class = str(class_)
+            if (text_obj_class == text_class) | ((re.search("_r|_n", text_class) != None) & (text_class[:-1] in text_obj_class)):
                 object_class_adjusted = int(classes[0].split("-")[0])
                 return object_class_adjusted
 
@@ -129,9 +131,12 @@ def adjust_object_class(obj_class):
 # This method converts the specific obj_class to the common one
 # using traffic_sign_classes data structure.
 def get_object_label(obj_class):
+    text_obj_class = str(obj_class)
+
     for classes in traffic_sign_classes.items():
         for class_ in classes[1]:
-            if (obj_class == class_) | ((re.search("_r|_n", class_) != None) & (class_[:-1] in obj_class)):
+            text_class = str(class_)
+            if (text_obj_class == text_class) | ((re.search("_r|_n", text_class) != None) & (text_class[:-1] in text_obj_class)):
                 object_class_adjusted = classes[0].split("-")[1]
                 return object_class_adjusted
 

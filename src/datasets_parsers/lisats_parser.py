@@ -46,6 +46,16 @@ def calculate_darknet_format(input_img, row):
     return parse_darknet_format(object_class_adjusted, image_width, image_height, left_x, bottom_y, right_x, top_y)
 
 
+def update_global_variables(train_pct, test_pct, color_mode, verbose, false_data, output_img_ext):
+    global TRAIN_PROB, TEST_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
+    TRAIN_PROB = train_pct
+    TEST_PROB = test_pct
+    COLOR_MODE = color_mode
+    SHOW_IMG = verbose
+    ADD_FALSE_DATA = false_data
+    OUTPUT_IMG_EXTENSION = output_img_ext
+
+
 def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
     update_db_prefix(DB_PREFIX)
