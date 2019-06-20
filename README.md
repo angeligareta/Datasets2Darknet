@@ -21,7 +21,7 @@ For the moment, in the [dataset_parsers](./src/datasets_parsers/) folder there a
 
 ### Detection Task
 #### Traffic Sign Datasets
-- [German Traffic Sign Recognition Benchmark](http://benchmark.ini.rub.de/) - Dataset Parser at [src/datasets_parsers/gtsdb_parser](./src/datasets_parsers/gtsdb_parser.py)
+- [German Traffic Sign Detection Benchmark](http://benchmark.ini.rub.de/?section=gtsdb&subsection=dataset) - Dataset Parser at [src/datasets_parsers/gtsdb_parser](./src/datasets_parsers/gtsdb_parser.py)
 - [Belgium Traffic Sign Dataset:](https://btsd.ethz.ch/shareddata/) - Dataset Parser at [src/datasets_parsers/btsdb_parser](./src/datasets_parsers/btsdb_parser.py)
 - [Mapping and Assessing the State of Traffic InFrastructure (MASTIF) Dataset](http://www.zemris.fer.hr/~ssegvic/mastif/datasets.shtml) - Dataset Parser at [src/datasets_parsers/mastif_parser](./src/datasets_parsers/mastif_parser.py)
 - [LISA Traffic Sign Dataset](http://cvrr.ucsd.edu/vivachallenge/index.php/signs/sign-detection/) - Dataset Parser at [src/datasets_parsers/lisats_parser](./src/datasets_parsers/lisats_parser.py)
